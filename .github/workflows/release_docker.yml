@@ -24,10 +24,10 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DOCKERHUB_ORG_NAME: ${{ vars.DOCKERHUB_ORG_NAME || 'toclawbot' }}
+  DOCKERHUB_ORG_NAME: ${{ secrets.DOCKER_USERNAME }}
   GHCR_ORG_NAME: ${{ vars.GHCR_ORG_NAME || 'toclawbot' }}
   IMAGE_NAME: openlist-git
-  IMAGE_NAME_DOCKERHUB: ${{ vars.DOCKERHUB_ORG_NAME || 'toclawbot' }}/openlist
+  IMAGE_NAME_DOCKERHUB: ${{ secrets.DOCKER_USERNAME }}/openlist
   REGISTRY: ghcr.io
   ARTIFACT_NAME: 'binaries_docker_release'
   ARTIFACT_NAME_LITE: 'binaries_docker_release_lite'
@@ -179,7 +179,7 @@ jobs:
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.GHCR_ORG_NAME }}/${{ env.IMAGE_NAME }}
-            ${{ env.DOCKERHUB_ORG_NAME }}/${{ env.IMAGE_NAME_DOCKERHUB }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME_DOCKERHUB }}
           tags: >
             ${{ github.event_name == 'workflow_dispatch'
                 && format('type=raw,value={0}', github.event.inputs.manual_tag)
@@ -263,7 +263,7 @@ jobs:
         with:
           images: |
             ${{ env.REGISTRY }}/${{ env.GHCR_ORG_NAME }}/${{ env.IMAGE_NAME }}
-            ${{ env.DOCKERHUB_ORG_NAME }}/${{ env.IMAGE_NAME_DOCKERHUB }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME_DOCKERHUB }}
           tags: >
             ${{ github.event_name == 'workflow_dispatch'
                 && format('type=raw,value={0}', github.event.inputs.manual_tag)
