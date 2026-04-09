@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_TAG=base
-FROM ghcr.io/openlistteam/openlist-base-image:${BASE_IMAGE_TAG}
+FROM ghcr.io/toclawbot/openlist-base-image:${BASE_IMAGE_TAG}
 LABEL MAINTAINER="OpenList"
 ARG TARGETPLATFORM
 ARG INSTALL_FFMPEG=false

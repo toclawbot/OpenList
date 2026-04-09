@@ -1,16 +1,14 @@
 ### Default image is base. You can add other support by modifying BASE_IMAGE_TAG. The following parameters are supported: base (default), aria2, ffmpeg, aio
 ARG BASE_IMAGE_TAG=base
 
-FROM alpine:edge AS builder
+FROM alpine:3.21 AS builder
 LABEL stage=go-builder
 WORKDIR /app/
-RUN apk add --no-cache bash curl jq gcc git go musl-dev
-COPY go.mod go.sum ./
-RUN go mod download
-COPY ./ ./
-RUN bash build.sh release docker
+RUN apk add --no-cache bash curl jq gcc git go musl-dev && \
+    go mod download && \
+    bash build.sh release docker
 
-FROM openlistteam/openlist-base-image:${BASE_IMAGE_TAG}
+FROM ghcr.io/toclawbot/openlist-base-image:${BASE_IMAGE_TAG}
 LABEL MAINTAINER="OpenList"
 ARG INSTALL_FFMPEG=false
 ARG INSTALL_ARIA2=false
